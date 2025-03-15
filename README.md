@@ -28,7 +28,7 @@ srt_path = "D:\\temp.srt"                                     # path of SubRip T
 wmplayer_path = "C:\\Program Files\\Windows Media Player"     # path of [Windows Media Player]
 ```
 
-## 3 run GUI
+## 3 Run GUI
 ```
 $ python Edge-TTS-GUI.py
 ```
