@@ -3,9 +3,9 @@ from tkinter import ttk
 import tkinter.messagebox
 import subprocess
 
-voice = "zh-CN-YunyangNeural"    # Choose voice
-mp3_path = "D:\\temp.mp3"         # path of audio (mp3)
-srt_path = "D:\\temp.srt"         # path of SubRip Text
+voice = "zh-CN-YunyangNeural"                                # Choose voice: [$ edge-tts --list-voices]
+mp3_path = "D:\\temp.mp3"                                    # path of audio (mp3)
+srt_path = "D:\\temp.srt"                                    # path of SubRip Text
 wmplayer_path = "C:\\Program Files\\Windows Media Player"    # path of [Windows Media Player]
 
 def run_command():
