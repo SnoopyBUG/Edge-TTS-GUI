@@ -22,7 +22,7 @@ $ pip install edge-tts
 
 ## 2 Change voice & path
 ```
-voice = "zh-CN-YunyangNeural"                                 # Choose voice
+voice = "zh-CN-YunyangNeural"                                 # Choose voice: [$ edge-tts --list-voices]
 mp3_path = "D:\\temp.mp3"                                     # path of audio (mp3)
 srt_path = "D:\\temp.srt"                                     # path of SubRip Text
 wmplayer_path = "C:\\Program Files\\Windows Media Player"     # path of [Windows Media Player]
