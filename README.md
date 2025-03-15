@@ -20,7 +20,15 @@ Make sure Windows Media Player is available.
 $ pip install edge-tts
 ```
 
-## 2 run GUI
+## 2 Change voice & path
+```
+voice = "zh-CN-YunyangNeural"                                 # Choose voice
+mp3_path = "D:\\temp.mp3"                                     # path of audio (mp3)
+srt_path = "D:\\temp.srt"                                     # path of SubRip Text
+wmplayer_path = "C:\\Program Files\\Windows Media Player"     # path of [Windows Media Player]
+```
+
+## 3 run GUI
 ```
 $ python Edge-TTS-GUI.py
 ```
