@@ -33,3 +33,4 @@ wmplayer_path = "C:\\Program Files\\Windows Media Player"     # path of [Windows
 $ python Edge-TTS-GUI.py
 ```
 You can input short text converting to speech directly, or convert a text file to a speech.
+![image](https://github.com/user-attachments/assets/8f7a014f-be33-498f-af88-109cf4134718)
