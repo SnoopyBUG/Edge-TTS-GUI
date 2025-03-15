@@ -3,9 +3,10 @@ from tkinter import ttk
 import tkinter.messagebox
 import subprocess
 
-voice = "zh-CN-YunyangNeural"
-mp3_dir = "D:\\LZT\\Study\\Code\\edge-tts\\temp.mp3"
-srt_dir = "D:\\LZT\\Study\\Code\\edge-tts\\temp.srt"
+voice = "zh-CN-YunyangNeural"    # Choose voice
+mp3_dir = "D:\\temp.mp3"         # path of audio (mp3)
+srt_dir = "D:\\temp.srt"         # path of SubRip Text
+wmplayer_dir = "C:\\Program Files\\Windows Media Player"    # path of [Windows Media Player]
 
 def run_command():
     user_input = entry.get()
@@ -16,7 +17,7 @@ def run_command():
         ]
         try:
             for command in commands:
-                subprocess.run(command, cwd='C:\\Program Files\\Windows Media Player', check=True, shell=True)
+                subprocess.run(command, cwd=wmplayer_dir, check=True, shell=True)
             tk.messagebox.showinfo("Success", "Commands executed successfully!")
         except subprocess.CalledProcessError as e:
             tk.messagebox.showerror("Error", f"Command failed: {e}")
