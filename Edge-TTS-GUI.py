@@ -43,7 +43,7 @@ entry = ttk.Entry(root, width=50)
 entry.pack(pady=10)
 
 # 创建执行按钮
-button = ttk.Button(root, text="Run Command", command=run_command)
+button = ttk.Button(root, text="RUN", command=run_command)
 button.pack(pady=20)
 
 # 运行主循环
