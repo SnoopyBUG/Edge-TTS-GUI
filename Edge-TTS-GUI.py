@@ -26,7 +26,7 @@ def run_command():
 
 # 创建主窗口
 root = tk.Tk()
-root.title("Edge-TTS GUI")
+root.title("Edge-TTS")
 root.geometry("400x300")
 
 # 创建样式
