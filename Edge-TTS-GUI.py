@@ -4,20 +4,20 @@ import tkinter.messagebox
 import subprocess
 
 voice = "zh-CN-YunyangNeural"    # Choose voice
-mp3_dir = "D:\\temp.mp3"         # path of audio (mp3)
-srt_dir = "D:\\temp.srt"         # path of SubRip Text
-wmplayer_dir = "C:\\Program Files\\Windows Media Player"    # path of [Windows Media Player]
+mp3_path = "D:\\temp.mp3"         # path of audio (mp3)
+srt_path = "D:\\temp.srt"         # path of SubRip Text
+wmplayer_path = "C:\\Program Files\\Windows Media Player"    # path of [Windows Media Player]
 
 def run_command():
     user_input = entry.get()
     if user_input:
         commands = [
-            'edge-tts --voice %s --text %s --write-media %s --write-subtitles %s' % (voice, user_input, mp3_dir,srt_dir),
-            'wmplayer.exe %s' % mp3_dir
+            'edge-tts --voice %s --text %s --write-media %s --write-subtitles %s' % (voice, user_input, mp3_path,srt_path),
+            'wmplayer.exe %s' % mp3_path
         ]
         try:
             for command in commands:
-                subprocess.run(command, cwd=wmplayer_dir, check=True, shell=True)
+                subprocess.run(command, cwd=wmplayer_path, check=True, shell=True)
             tk.messagebox.showinfo("Success", "Commands executed successfully!")
         except subprocess.CalledProcessError as e:
             tk.messagebox.showerror("Error", f"Command failed: {e}")
