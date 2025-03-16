@@ -2,16 +2,14 @@ import edge_tts
 import asyncio
 import chardet
 import pygame
-import threading
 
 import tkinter as tk
 from tkinter import ttk
-import tkinter.messagebox
 import subprocess
 
-voice = "zh-CN-YunyangNeural"    # Choose voice: [$ edge-tts --list-voices]
-mp3_path = "D:\\emp.mp3"         # path of audio (mp3)
-srt_path = "D:\\temp.srt"        # path of SubRip Text
+voice = "zh-CN-YunyangNeural"     # Choose voice: [$ edge-tts --list-voices]
+mp3_path = "D:\\temp.mp3"         # path of audio (mp3)
+srt_path = "D:\\temp.srt"         # path of SubRip Text
 
 
 async def TTS(text, voice):
@@ -19,23 +17,21 @@ async def TTS(text, voice):
     await tts.save(mp3_path, srt_path)
 
 def play_sound():
-    def _play():
-        pygame.mixer.init()
-        pygame.mixer.music.load(mp3_path)
-        pygame.mixer.music.play()
-        while pygame.mixer.music.get_busy():
-            pygame.time.Clock().tick(10)
-        pygame.mixer.music.stop()
-        pygame.quit()
-
-    thread = threading.Thread(target=_play)
-    thread.start()
+    pygame.mixer.init()
+    pygame.mixer.music.load(mp3_path)
+    pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy():
+        pygame.time.Clock().tick(10)
+    pygame.mixer.music.stop()
+    pygame.quit()
 
 def run():
     user_input = entry.get()
     file_path = file_entry.get()
     if user_input or (file_var.get() and file_path):
         try:
+            output_text.set("<<<<<<<<<<  Generating...  >>>>>>>>>>\n\n")
+            root.update_idletasks()
             if file_var.get():
                 text = open(file_path, "r", encoding = chardet.detect(open(file_path, 'rb').read())["encoding"]).read()
                 asyncio.run(TTS(text=text, voice=voice))
@@ -43,16 +39,16 @@ def run():
                 asyncio.run(TTS(text=user_input, voice=voice))
 
             play_sound()
-            # tk.messagebox.showinfo("Success", "Command executed successfully!")
-        except subprocess.CalledProcessError as e:
-            tk.messagebox.showerror("Error", f"Command failed: {e}")
+            output_text.set("Generated successfully!\n%s\n%s"%(mp3_path,srt_path))
+        except Exception as e:
+            output_text.set(f"Failed: {e}")
     else:
-        tk.messagebox.showwarning("Input Error", "Please enter some text, or use file as input.")
+        output_text.set("Please enter some text, or use file as input.")
 
 # 创建主窗口
 root = tk.Tk()
 root.title("Edge-TTS")
-root.geometry("400x300")
+root.geometry("400x400")
 
 # 创建样式
 style = ttk.Style()
@@ -82,6 +78,11 @@ file_check.pack(pady=10)
 # 创建执行按钮
 button = ttk.Button(root, text="RUN", command=run)
 button.pack(pady=20)
+
+# 创建输出文本框
+output_text = tk.StringVar()
+output_label = ttk.Label(root, textvariable=output_text, wraplength=380)
+output_label.pack(pady=10)
 
 # 运行主循环
 root.mainloop()
