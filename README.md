@@ -2,7 +2,7 @@
 
 **input text → generate audio → play the audio**
 
-GUI for Edge-TSS, **playing the audio** generated immediately with wmplayer on Windows. 
+GUI for Edge-TSS, **playing the audio** generated immediately. 
 
 Based on Edge-TSS (https://github.com/rany2/edge-tts).
 
@@ -10,14 +10,16 @@ Based on Edge-TSS (https://github.com/rany2/edge-tts).
 
 Too lazy to speak, currently acting as the mouthpiece for me (an introvert).
 
-## 0 Notice
-```
-Make sure Windows Media Player is available.
-```
-
-## 1 Install edge-tts
+## 1 Install edge-tts and playsound
 ```
 $ pip install edge-tts
+$ pip install playsound
+```
+**Attention：** You should remove the encoding of playsoud at line 55.
+```
+# command = ' '.join(command).encode('utf-16')
+→
+command = ' '.join(command)
 ```
 
 ## 2 Change voice & path
@@ -25,7 +27,6 @@ $ pip install edge-tts
 voice = "zh-CN-YunyangNeural"                                 # Choose voice: [$ edge-tts --list-voices]
 mp3_path = "D:\\temp.mp3"                                     # path of audio (mp3)
 srt_path = "D:\\temp.srt"                                     # path of SubRip Text
-wmplayer_path = "C:\\Program Files\\Windows Media Player"     # path of [Windows Media Player]
 ```
 
 ## 3 Run GUI
