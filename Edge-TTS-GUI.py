@@ -1,31 +1,49 @@
+import edge_tts
+import asyncio
+import chardet
+import pygame
+import threading
+
 import tkinter as tk
 from tkinter import ttk
 import tkinter.messagebox
 import subprocess
 
-voice = "zh-CN-YunyangNeural"                                # Choose voice: [$ edge-tts --list-voices]
-mp3_path = "D:\\temp.mp3"                                    # path of audio (mp3)
-srt_path = "D:\\temp.srt"                                    # path of SubRip Text
-wmplayer_path = "C:\\Program Files\\Windows Media Player"    # path of [Windows Media Player]
+voice = "zh-CN-YunyangNeural"    # Choose voice: [$ edge-tts --list-voices]
+mp3_path = "D:\\emp.mp3"         # path of audio (mp3)
+srt_path = "D:\\temp.srt"        # path of SubRip Text
 
-def run_command():
+
+async def TTS(text, voice):
+    tts = edge_tts.Communicate(text=text, voice=voice)
+    await tts.save(mp3_path, srt_path)
+
+def play_sound():
+    def _play():
+        pygame.mixer.init()
+        pygame.mixer.music.load(mp3_path)
+        pygame.mixer.music.play()
+        while pygame.mixer.music.get_busy():
+            pygame.time.Clock().tick(10)
+        pygame.mixer.music.stop()
+        pygame.quit()
+
+    thread = threading.Thread(target=_play)
+    thread.start()
+
+def run():
     user_input = entry.get()
     file_path = file_entry.get()
     if user_input or (file_var.get() and file_path):
-        if file_var.get():
-            commands = [
-                'edge-tts --voice %s --file %s --write-media %s --write-subtitles %s' % (voice, file_path, mp3_path, srt_path),
-                'wmplayer.exe %s' % mp3_path
-            ]
-        else:
-            commands = [
-                'edge-tts --voice %s --text %s --write-media %s --write-subtitles %s' % (voice, user_input, mp3_path, srt_path),
-                'wmplayer.exe %s' % mp3_path
-            ]
         try:
-            for command in commands:
-                subprocess.run(command, cwd=wmplayer_path, check=True, shell=True)
-            tk.messagebox.showinfo("Success", "Commands executed successfully!")
+            if file_var.get():
+                text = open(file_path, "r", encoding = chardet.detect(open(file_path, 'rb').read())["encoding"]).read()
+                asyncio.run(TTS(text=text, voice=voice))
+            else:
+                asyncio.run(TTS(text=user_input, voice=voice))
+
+            play_sound()
+            # tk.messagebox.showinfo("Success", "Command executed successfully!")
         except subprocess.CalledProcessError as e:
             tk.messagebox.showerror("Error", f"Command failed: {e}")
     else:
@@ -34,7 +52,7 @@ def run_command():
 # 创建主窗口
 root = tk.Tk()
 root.title("Edge-TTS")
-root.geometry("400x400")
+root.geometry("400x300")
 
 # 创建样式
 style = ttk.Style()
@@ -62,7 +80,7 @@ file_check = ttk.Checkbutton(root, text="Use file as input", variable=file_var)
 file_check.pack(pady=10)
 
 # 创建执行按钮
-button = ttk.Button(root, text="RUN", command=run_command)
+button = ttk.Button(root, text="RUN", command=run)
 button.pack(pady=20)
 
 # 运行主循环
