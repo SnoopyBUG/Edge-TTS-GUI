@@ -10,16 +10,12 @@ Based on Edge-TSS (https://github.com/rany2/edge-tts).
 
 Too lazy to speak, currently acting as the mouthpiece for me (an introvert).
 
-## 1 Install edge-tts and playsound
+## 1 Install
 ```
 $ pip install edge-tts
-$ pip install playsound
-```
-**Attention：** You should remove the encoding of playsoud at line 55.
-```
-# command = ' '.join(command).encode('utf-16')
-→
-command = ' '.join(command)
+$ pip install asyncio
+$ pip install chardet
+$ pip install pygame
 ```
 
 ## 2 Change voice & path
